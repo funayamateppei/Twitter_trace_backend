@@ -1,0 +1,249 @@
+openapi: 3.0.0
+info:
+  title: twitterTrace API Documentation
+  version: 1.0.0
+paths:
+  /api/tweet:
+    get:
+      tags:
+        - tweet
+
+      summary: tweet一覧取得のAPIドキュメント
+
+      description: tweet情報の一覧を取得する
+
+      parameters:
+        - name: limit
+          in: query
+          description: 取得数の上限
+          required: false
+          schema:
+            type: integer
+        - name: paged
+          in: query
+          description: 現在のページ数
+          required: false
+          schema:
+            type: integer
+
+      responses:
+        200:
+          description: tweetデータ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schema/Tweet1"
+        404:
+          description: "予期しないエラー"
+  /api/tweet/{tweetId}:
+    get:
+      tags:
+        - tweet
+
+      summary: tweet詳細取得のAPIドキュメント
+
+      description: tweet情報の詳細を取得する
+
+      parameters:
+        - name: tweetId
+          in: path
+          description: ツイートID
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        200:
+          description: tweetデータ
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Tweet2"
+        404:
+          description: "予期しないエラー"
+
+components:
+  schema:
+    Tweet1:
+      type: object
+      properties:
+        id:
+          example: 124
+        user_id:
+          example: 25
+        comment_to:
+          example: null
+        body:
+          example: "投稿投稿"
+        created_at:
+          example: "2023-01-15T04:36:01.000000Z"
+        updated_at:
+          example: "2023-01-15T04:36:01.000000Z"
+        comments:
+          type: array
+          items:
+            $ref: "#/components/schema/Comment"
+        user:
+          $ref: "#/components/schema/User"
+        comment_count:
+          example: 1
+        is_commented:
+          example: true
+        like_count:
+          example: 1
+        retweet_count:
+          example: 0
+        is_liked:
+          example: true
+        is_retweeted:
+          example: false
+        images:
+          type: array
+          items:
+            $ref: "#/components/schema/TweetImage"
+    Tweet2:
+      type: object
+      properties:
+        id:
+          example: 124
+        user_id:
+          example: 25
+        comment_to:
+          example: null
+        body:
+          example: "投稿投稿"
+        created_at:
+          example: "2023-01-15T04:36:01.000000Z"
+        updated_at:
+          example: "2023-01-15T04:36:01.000000Z"
+        comments:
+          type: array
+          items: 
+          example: []
+        comment_count:
+          example: 0
+        is_commented:
+          example: true
+        like_count:
+          example: 100
+        retweet_count:
+          example: 0
+        is_liked:
+          example: true
+        is_retweeted:
+          example: false
+        images:
+          type: array
+          items: 
+          example: []
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 125
+        user_id:
+          type: integer
+          example: 28
+        comment_to:
+          type: integer
+          example: 124
+        body:
+          type: string
+          example: "コメントコメント"
+        created_at:
+          type: string
+          example: "2023-01-15T04:36:01.000000Z"
+        updated_at:
+          type: string
+          example: "2023-01-15T04:36:01.000000Z"
+        comments:
+          type: array
+          items: 
+          example: []
+        user:
+          $ref: "#/components/schema/User"
+        comment_count:
+          type: integer
+          example: 0
+        is_commented:
+          type: boolean
+          example: false
+        like_count:
+          type: integer
+          example: 0
+        retweet_count:
+          type: integer
+          example: 0
+        is_liked:
+          type: boolean
+          example: true
+        is_retweeted:
+          type: boolean
+          example: false
+        images:
+          type: array
+          items: 
+          example: []
+
+    TweetImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 18
+        tweet_id:
+          type: integer
+          example: 124
+        image:
+          type: string
+          example: "http://localhost/storage/tweets/images/c55b629365c122db04e5fc101525c7f8.png"
+        created_at:
+          type: string
+          example: "2023-01-15T04:36:02.000000Z"
+        updated_at:
+          type: string
+          example: "2023-01-15T04:36:02.000000Z"
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 25
+        name:
+          type: string
+          example: "koga"
+        account_name:
+          type: string
+          example: "koga"
+        avator:
+          type: string
+          example: "https://via.placeholder.com/640x480.png/0066bb?text=blanditiis"
+        profile_background:
+          type: string
+          example: null
+        introduction:
+          type: string
+          example: null
+        birthday:
+          type: string
+          example: null
+        web:
+          type: string
+          example: null
+        email:
+          type: string
+          example: "koga@sereal.jp"
+        email_verified_at:
+          type: string
+          example: "2023-01-12T14:31:24.000000Z"
+        created_at:
+          type: string
+          example: "2023-01-12T14:31:24.000000Z"
+        updated_at:
+          type: string
+          example: "2023-01-12T14:31:24.000000Z"
